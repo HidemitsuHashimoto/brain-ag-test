@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from "react";
 
-enum ActiveTab {
+export enum ActiveTab {
   Dash = 'dash',
   Form = 'Form',
 }
