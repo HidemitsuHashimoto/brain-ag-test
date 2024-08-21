@@ -1,7 +1,7 @@
 'use client'
 
 import { Producer } from "@/business/producer-domain";
-import { ProducerService } from "@/presentation/producer";
+import { ProducerService } from "@/services/producer";
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 type ErrorProps = {
