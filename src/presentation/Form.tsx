@@ -4,9 +4,10 @@ import { formValidation } from "@/business/formValidation"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useFieldArray, useForm } from "react-hook-form"
 import TextInput from "./components/TextInput"
-import { Crops, CropsPlanted } from "@/business/producer-domain"
+import { Crops, CropsPlanted, Producer, ProducerForm } from "@/business/producer-domain"
 import { useProducerContext } from "@/persistence/producerContext"
 import ProducerCard from "./components/ProducerCard"
+import { citiesDatabaseFormat } from "@/business/cities"
 
 const defaultCrops: CropsPlanted[] = [
   { name: Crops.Coffee, planted: false },
@@ -25,14 +26,15 @@ const cropsNameFormat: { [key: string]: string } = {
 }
 
 export default function Form() {
-  const { producers } = useProducerContext()
+  const { producers, addProducer } = useProducerContext()
 
   const {
     control,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm({
+  } = useForm<ProducerForm>({
     resolver: yupResolver(formValidation),
     defaultValues: {
       addresses: {
@@ -46,7 +48,23 @@ export default function Form() {
     name: 'addresses.cropsPlanted'
   })
   
-  const onSubmit = (data: any) => console.log(data)
+  const onSubmit = (data: ProducerForm) => {
+    const formatedProducer: Producer = {
+      ...data,
+      addresses: [
+        {
+          ...data.addresses,
+          totalArea: Number(data.addresses.totalArea),
+          arableArea: Number(data.addresses.arableArea),
+          vegetationArea: Number(data.addresses.vegetationArea),
+          city: citiesDatabaseFormat(data.addresses.city),
+          cropsPlanted: data.addresses.cropsPlanted! as CropsPlanted[],
+        }
+      ]
+    }
+    addProducer?.(formatedProducer)
+    reset()
+  }
 
   return (
     <section className="flex gap-4 justify-center">
