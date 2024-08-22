@@ -20,4 +20,17 @@ export class ProducerService {
       resolve({ status: 201 })
     })
   }
+  
+  static async patch(producerList: Producer[], producer: Producer): Promise<PromiseResponse> {
+    return new Promise((resolve) => {
+      const editedProducers = producerList.map(producerItem => {
+        if(producerItem.document === producer.document)
+          return producer
+
+        return producerItem
+      })
+
+      resolve({ status: 201, body: editedProducers })
+    })
+  }
 }

@@ -8,6 +8,7 @@ import { Crops, CropsPlanted, Producer, ProducerForm } from "@/business/producer
 import { useProducerContext } from "@/persistence/producerContext"
 import ProducerCard from "./components/ProducerCard"
 import { citiesDatabaseFormat } from "@/business/cities"
+import { useState } from "react"
 
 const defaultCrops: CropsPlanted[] = [
   { name: Crops.Coffee, planted: false },
@@ -25,14 +26,17 @@ const cropsNameFormat: { [key: string]: string } = {
   [Crops.SugarCane]: 'Cana de Açúcar',
 }
 
+export type EditProps = { active: boolean; producerDoc: string; }
 export default function Form() {
-  const { producers, addProducer } = useProducerContext()
+  const { producers, addProducer, editProducer } = useProducerContext()
+  const [isEdit, setIsEdit] = useState<EditProps>({ active: false, producerDoc: '' })
 
   const {
     control,
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ProducerForm>({
     resolver: yupResolver(formValidation),
@@ -48,6 +52,8 @@ export default function Form() {
     name: 'addresses.cropsPlanted'
   })
   
+console.log({isEdit})
+
   const onSubmit = (data: ProducerForm) => {
     const formatedProducer: Producer = {
       ...data,
@@ -62,7 +68,14 @@ export default function Form() {
         }
       ]
     }
-    addProducer?.(formatedProducer)
+
+    if(isEdit) {
+      editProducer?.(formatedProducer)
+      setIsEdit({ active: false, producerDoc: '' })
+    }else {
+      addProducer?.(formatedProducer)
+    }
+
     reset()
   }
 
@@ -111,7 +124,13 @@ export default function Form() {
         <h2 className="text-xl mb-4">Produtores</h2>
         <ul className="flex flex-col gap-2">
           {producers?.map(producer => (
-            <ProducerCard key={producer.document} producer={producer} />
+            <ProducerCard
+              key={producer.document}
+              producer={producer}
+              isEdit={isEdit}
+              setValue={setValue}
+              setIsEdit={setIsEdit}
+            />
           ))}
         </ul>
       </section>

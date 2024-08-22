@@ -13,6 +13,7 @@ type ProducerContextProps = {
   loading: boolean;
   error: ErrorProps;
   addProducer?: (producer: Producer) => void;
+  editProducer?: (producer: Producer) => Promise<void>
 }
 
 const ProducerContext = createContext<ProducerContextProps>({
@@ -53,12 +54,22 @@ export function ProducerContextProvider({ children }: ProducerContextProviderPro
     }
   }, [producers])
 
+  const editProducer = useCallback(async (producer: Producer) => {
+    try{
+      const response = await ProducerService.patch(producers, producer)
+
+      setProducers(response.body)
+    }catch(e: any) {
+      setError({ message: e.message })
+    }
+  }, [producers])
+
   useEffect(() => {
     console.log({producers, loading, error})
   }, [error, loading, producers])
 
   return (
-    <ProducerContext.Provider value={{ producers, loading, error, addProducer }}>{children}</ProducerContext.Provider>
+    <ProducerContext.Provider value={{ producers, loading, error, addProducer, editProducer }}>{children}</ProducerContext.Provider>
   )
 }
 
