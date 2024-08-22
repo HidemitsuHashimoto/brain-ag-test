@@ -10,11 +10,11 @@ type TextInputProps = {
 export default function TextInput({ id, type = 'text', label, register, error }: TextInputProps) {
   return (
     <section>
-      <div>
+      <div className="flex flex-col">
         <label htmlFor={id} className="mr-2">{label}</label>
-        <input className='text-black' id={id} type={type} {...register} />
+        <input className='text-black py-1 px-2 rounded-sm' id={id} type={type} {...register} />
       </div>
-      <p>{error}</p>
+      {error ? <p className="text-yellow-500">{error}</p> : null}
     </section>
   )
 }
