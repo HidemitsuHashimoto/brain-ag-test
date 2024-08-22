@@ -1,9 +1,14 @@
-export enum CropsPlanted {
+export enum Crops {
   Soy = 'soy',
   Corn = 'corn',
   Cotton = 'cotton',
   Coffee = 'coffee',
   SugarCane = 'sugarcane',
+}
+
+export type CropsPlanted = {
+  name: Crops;
+  planted: boolean;
 }
 
 export type Addresses = {
