@@ -13,7 +13,8 @@ type ProducerContextProps = {
   loading: boolean;
   error: ErrorProps;
   addProducer?: (producer: Producer) => void;
-  editProducer?: (producer: Producer) => Promise<void>
+  editProducer?: (producer: Producer) => Promise<void>;
+  deleteProducer?: (producer: Producer) => Promise<void>;
 }
 
 const ProducerContext = createContext<ProducerContextProps>({
@@ -64,12 +65,25 @@ export function ProducerContextProvider({ children }: ProducerContextProviderPro
     }
   }, [producers])
 
-  useEffect(() => {
-    console.log({producers, loading, error})
-  }, [error, loading, producers])
+  const deleteProducer = useCallback(async (producer: Producer) => {
+    try{
+      const response = await ProducerService.delete(producers, producer)
+
+      setProducers(response.body)
+    }catch(e: any) {
+      setError({ message: e.message })
+    }
+  }, [producers])
 
   return (
-    <ProducerContext.Provider value={{ producers, loading, error, addProducer, editProducer }}>{children}</ProducerContext.Provider>
+    <ProducerContext.Provider value={{
+      producers,
+      loading,
+      error,
+      addProducer,
+      editProducer,
+      deleteProducer
+    }}>{children}</ProducerContext.Provider>
   )
 }
 

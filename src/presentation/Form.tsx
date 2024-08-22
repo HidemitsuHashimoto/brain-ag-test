@@ -51,8 +51,6 @@ export default function Form() {
     control,
     name: 'addresses.cropsPlanted'
   })
-  
-console.log({isEdit})
 
   const onSubmit = (data: ProducerForm) => {
     const formatedProducer: Producer = {

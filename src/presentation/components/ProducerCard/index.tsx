@@ -4,6 +4,7 @@ import ProducerCardAction from "./ProducerCardAction";
 import { UseFormSetValue } from "react-hook-form";
 import { Dispatch, SetStateAction, useMemo } from "react";
 import { EditProps } from "@/presentation/Form";
+import { useProducerContext } from "@/persistence/producerContext";
 
 type ProducerCardProps = {
   producer: Producer;
@@ -12,6 +13,8 @@ type ProducerCardProps = {
   setIsEdit: Dispatch<SetStateAction<EditProps>>;
 }
 export default function ProducerCard({ producer, isEdit, setValue, setIsEdit }: ProducerCardProps) {
+  const { deleteProducer } = useProducerContext()
+
   const editIsActive = useMemo(() => isEdit.active && isEdit.producerDoc === producer.document, [producer, isEdit])
 
   const handleEdit = () => {
@@ -30,6 +33,10 @@ export default function ProducerCard({ producer, isEdit, setValue, setIsEdit }: 
     setValue('addresses.cropsPlanted', address.cropsPlanted)
   }
 
+  const handleDelete = () => {
+    deleteProducer?.(producer)
+  }
+
   return (
     <li className={`flex items-center justify-between gap-2 border-2 rounded-md p-4 w-[400px] ${editIsActive ? 'bg-blue-700' : 'bg-transparent'}`}>
       <div>
@@ -39,7 +46,7 @@ export default function ProducerCard({ producer, isEdit, setValue, setIsEdit }: 
       </div>
       <div className="flex flex-col gap-2">
         <ProducerCardAction text="Editar" onClick={handleEdit} />
-        <ProducerCardAction text="Remover" onClick={() => {}} />
+        <ProducerCardAction text="Remover" onClick={handleDelete} />
       </div>
     </li>
   )

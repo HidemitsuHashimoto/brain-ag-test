@@ -33,4 +33,12 @@ export class ProducerService {
       resolve({ status: 201, body: editedProducers })
     })
   }
+  
+  static async delete(producerList: Producer[], producer: Producer): Promise<PromiseResponse> {
+    return new Promise((resolve) => {
+      const deletedProducers = producerList.filter(producerItem => producerItem.document !== producer.document)
+
+      resolve({ status: 201, body: deletedProducers })
+    })
+  }
 }
