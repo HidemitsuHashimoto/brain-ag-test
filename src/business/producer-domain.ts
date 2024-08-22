@@ -26,3 +26,20 @@ export interface Producer {
   farmName: string;
   addresses: Addresses[];
 }
+
+export type ProducerForm = {
+  document: string;
+  name: string;
+  farmName: string;
+  addresses: {
+    cropsPlanted?: {
+        name: string;
+        planted: boolean;
+    }[] | undefined;
+    city: string;
+    state: string;
+    totalArea: string;
+    arableArea: string;
+    vegetationArea: string;
+  };
+}
