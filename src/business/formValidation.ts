@@ -21,12 +21,26 @@ export const formValidation = yup.object({
   addresses: yup.object({
     city: yup.string().required('A cidade é obrigatória'),
     state: yup.string().required('O estado é obrigatório').max(2, 'Pode no máximo 2 letras. Ex: SP'),
-    totalArea: yup.string().required('A área total da fazenda é obrigatória'),
+    totalArea: yup.string().required('A área total da fazenda é obrigatória')
+      .test({
+        message: 'A soma de área agrícultável e vegetação, não deverá ser maior que a área total da fazenda.',
+        test: function (value) {
+          const arableArea = this.parent.arableArea ? this.parent.arableArea : 0
+          const vegetationArea = this.parent.vegetationArea ? this.parent.vegetationArea : 0
+          return value < (arableArea + vegetationArea)
+        }
+      }),
     arableArea: yup.string().required('A área agricultável é obrigatória'),
     vegetationArea: yup.string().required('A área de vegetação é obrigatória'),
     cropsPlanted: yup.array().of(yup.object({
       name: yup.string().required('O id da cultura é obrigatória'),
       planted: yup.boolean().default(false),
-    })).required('A cultura plantada é obrigatória').min(1),
+    }))
+    .test({
+      message: 'Pelo menos uma cultura precisa estar marcada',
+      test: function (list) {
+        return list?.some(value => value.planted)
+      }
+    }),
   })
 })
