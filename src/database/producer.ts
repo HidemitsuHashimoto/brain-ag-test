@@ -1,4 +1,4 @@
-import { CropsPlanted, Producer } from "@/business/producer-domain";
+import { Crops, Producer } from "@/business/producer-domain";
 
 export const producerDatabase: Producer[] = [
   {
@@ -13,8 +13,11 @@ export const producerDatabase: Producer[] = [
         arableArea: 5,
         vegetationArea: 5,
         cropsPlanted: [
-          CropsPlanted.Coffee,
-          CropsPlanted.Corn,
+          { name: Crops.Coffee, planted: true },
+          { name: Crops.Corn, planted: true },
+          { name: Crops.Cotton, planted: false },
+          { name: Crops.Soy, planted: false },
+          { name: Crops.SugarCane, planted: false },
         ],
       }
     ]
@@ -31,8 +34,11 @@ export const producerDatabase: Producer[] = [
         arableArea: 5,
         vegetationArea: 5,
         cropsPlanted: [
-          CropsPlanted.Coffee,
-          CropsPlanted.Corn,
+          { name: Crops.Coffee, planted: true },
+          { name: Crops.Corn, planted: true },
+          { name: Crops.Cotton, planted: false },
+          { name: Crops.Soy, planted: false },
+          { name: Crops.SugarCane, planted: false },
         ],
       }
     ]
@@ -49,8 +55,11 @@ export const producerDatabase: Producer[] = [
         arableArea: 5,
         vegetationArea: 5,
         cropsPlanted: [
-          CropsPlanted.Coffee,
-          CropsPlanted.Corn,
+          { name: Crops.Coffee, planted: false },
+          { name: Crops.Corn, planted: true },
+          { name: Crops.Cotton, planted: false },
+          { name: Crops.Soy, planted: true },
+          { name: Crops.SugarCane, planted: false },
         ],
       }
     ]
@@ -67,8 +76,11 @@ export const producerDatabase: Producer[] = [
         arableArea: 5,
         vegetationArea: 5,
         cropsPlanted: [
-          CropsPlanted.Coffee,
-          CropsPlanted.Corn,
+          { name: Crops.Coffee, planted: false },
+          { name: Crops.Corn, planted: false },
+          { name: Crops.Cotton, planted: true },
+          { name: Crops.Soy, planted: false },
+          { name: Crops.SugarCane, planted: false },
         ],
       }
     ]
@@ -85,8 +97,11 @@ export const producerDatabase: Producer[] = [
         arableArea: 5,
         vegetationArea: 5,
         cropsPlanted: [
-          CropsPlanted.Coffee,
-          CropsPlanted.Corn,
+          { name: Crops.Coffee, planted: false },
+          { name: Crops.Corn, planted: false },
+          { name: Crops.Cotton, planted: true },
+          { name: Crops.Soy, planted: false },
+          { name: Crops.SugarCane, planted: true },
         ],
       }
     ]
