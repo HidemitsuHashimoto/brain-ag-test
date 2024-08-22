@@ -93,8 +93,8 @@ export const producerDatabase: Producer[] = [
       {
         city: 'abre-campo',
         state: 'mg',
-        totalArea: 10,
-        arableArea: 5,
+        totalArea: 200,
+        arableArea: 30,
         vegetationArea: 5,
         cropsPlanted: [
           { name: Crops.Coffee, planted: false },
