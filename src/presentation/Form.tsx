@@ -9,6 +9,7 @@ import { useProducerContext } from "@/persistence/producerContext"
 import ProducerCard from "./components/ProducerCard"
 import { citiesDatabaseFormat } from "@/business/cities"
 import { useState } from "react"
+import { SubChapter } from "./components/SubChapter"
 
 const defaultCrops: CropsPlanted[] = [
   { name: Crops.Coffee, planted: false },
@@ -81,7 +82,8 @@ export default function Form() {
     <section className="flex gap-4 justify-center">
       <form className="flex flex-col gap-2 flex-2" onSubmit={handleSubmit(onSubmit)}>
         <section className="flex flex-col gap-2 border-2 rounded-md p-4">
-          <h2 className="text-xl">Dados do produtor</h2>
+          <SubChapter text="Dados do produtor" />
+
           <TextInput id="Document" label="CPF/CNPJ:" register={register('document')} error={errors.document?.message} />
           <TextInput id='Name' label="Nome do produtor:" register={register('name')} error={errors.name?.message} />
           <TextInput id='FarmName' label="Nome da Fazenda:" register={register('farmName')} error={errors.farmName?.message} />
@@ -89,7 +91,8 @@ export default function Form() {
 
         <section className="flex flex-col gap-4 border-2 rounded-md p-4">
           <section className="flex flex-col gap-2">
-            <h2 className="text-xl">Endereço:</h2>
+            <SubChapter text="Endereço:" />
+
             <TextInput id='City' label="Cidade" register={register('addresses.city')} error={errors.addresses?.city?.message} />
             <TextInput id='State' label="Estado" register={register('addresses.state')} error={errors.addresses?.state?.message} />
             <TextInput id='TotalArea' label="Área total em hectares" register={register('addresses.totalArea')} error={errors.addresses?.totalArea?.message} />
@@ -119,7 +122,8 @@ export default function Form() {
       </form>
 
       <section className="flex-1 border-2 rounded-md p-4">
-        <h2 className="text-xl mb-4">Produtores</h2>
+        <SubChapter text="Produtores" classStyle="mb-4" />
+
         <ul className="flex flex-col gap-2">
           {producers?.map(producer => (
             <ProducerCard
