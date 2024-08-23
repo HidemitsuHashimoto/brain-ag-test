@@ -10,6 +10,7 @@ import ProducerCard from "./components/ProducerCard"
 import { citiesDatabaseFormat } from "@/business/cities"
 import { useState } from "react"
 import { SubChapter } from "./components/SubChapter"
+import { cropsNameFormat } from "@/business/cropFormat"
 
 const defaultCrops: CropsPlanted[] = [
   { name: Crops.Coffee, planted: false },
@@ -19,13 +20,6 @@ const defaultCrops: CropsPlanted[] = [
   { name: Crops.SugarCane, planted: false },
 ]
 
-const cropsNameFormat: { [key: string]: string } = {
-  [Crops.Coffee]: 'Café',
-  [Crops.Corn]: 'Milho',
-  [Crops.Cotton]: 'Algodão',
-  [Crops.Soy]: 'Soja',
-  [Crops.SugarCane]: 'Cana de Açúcar',
-}
 
 export type EditProps = { active: boolean; producerDoc: string; }
 export default function Form() {
