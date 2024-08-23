@@ -1,6 +1,4 @@
-import { Addresses } from '@/business/producer-domain';
-import { useEffect, useState } from 'react';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, PieLabel } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -17,35 +15,20 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
   );
 };
 
-type PieChartProps = {
-  addresses: Addresses[];
-}
-type PieDataProps = {
+export type PieDataProps = {
   name: string;
   value: number;
 }
-export default function DashPieChart({ addresses }: PieChartProps) {
-  const [statesData, setStatesData] = useState<PieDataProps[]>([])
-
-  useEffect(() => {
-    const statesCount: { [key: string]: number } = {}
-    for(let i of addresses) {
-      console.log({i})
-      if(statesCount[i.state] !== undefined)
-        statesCount[i.state]++
-      else
-        statesCount[i.state] = 1
-    }
-    
-    const newStatesData = Object.keys(statesCount).map(state => ({ name: state.toUpperCase(), value: statesCount[state] }))
-    setStatesData(newStatesData)
-  }, [addresses])
+type PieChartProps = {
+  data: PieDataProps[]
+}
+export default function DashPieChart({ data }: PieChartProps) {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <PieChart width={400} height={400}>
         <Pie
-          data={statesData}
+          data={data}
           cx="50%"
           cy="50%"
           labelLine={false}
@@ -54,7 +37,7 @@ export default function DashPieChart({ addresses }: PieChartProps) {
           fill="#8884d8"
           dataKey="value"
         >
-          {statesData.map((entry, index) => (
+          {data.map((_, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
