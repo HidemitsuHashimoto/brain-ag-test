@@ -3,6 +3,7 @@ import DashItem from "./DashItem"
 import { SubChapter } from "../SubChapter"
 import DashPieChart, { PieDataProps } from "./DashPieChart"
 import { useEffect, useState } from "react"
+import { cropsNameFormat } from "@/business/cropFormat"
 
 type CropsChartProps = {
   addresses: Addresses[]
@@ -21,14 +22,14 @@ export default function CropsChart({ addresses }: CropsChartProps) {
       }
     }
     
-    const newCropsData = Object.keys(cropsCount).map(state => ({ name: state.toUpperCase(), value: cropsCount[state] }))
+    const newCropsData = Object.keys(cropsCount).map(key => ({ name: cropsNameFormat[key], value: cropsCount[key] }))
     setCropsData(newCropsData)
   }, [addresses])
   
   return (
-    <DashItem direction="col">
+    <DashItem direction="col" width="w-full">
       <SubChapter text="Gráfico de pizza por estado:" />
-      <div className="w-[400px] h-[400px]">
+      <div className="w-[800px] h-[300px]">
         <DashPieChart data={cropsData} />
       </div>
     </DashItem>

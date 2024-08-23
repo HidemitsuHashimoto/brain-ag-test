@@ -19,14 +19,14 @@ export default function StateChart({ addresses }: StateChartProps) {
         statesCount[i.state] = 1
     }
     
-    const newStatesData = Object.keys(statesCount).map(state => ({ name: state.toUpperCase(), value: statesCount[state] }))
+    const newStatesData = Object.keys(statesCount).map(key => ({ name: key.toUpperCase(), value: statesCount[key] }))
     setStatesData(newStatesData)
   }, [addresses])
   
   return (
-    <DashItem direction="col">
+    <DashItem direction="col" width="w-full">
       <SubChapter text="Gráfico de pizza por estado:" />
-      <div className="w-[400px] h-[400px]">
+      <div className="w-[800px] h-[300px]">
         <DashPieChart data={statesData} />
       </div>
     </DashItem>

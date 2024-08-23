@@ -2,7 +2,9 @@ import { useProducerContext } from "@/persistence/producerContext"
 import { SubChapter } from "./components/SubChapter"
 import { useMemo } from "react"
 import DashItem from "./components/Dashboard/DashItem"
-import DashPieChart from "./components/Dashboard/DashPieChart"
+import StateChart from "./components/Dashboard/StateChart"
+import CropsChart from "./components/Dashboard/CropsChart"
+import UsableSoilChart from "./components/Dashboard/UsableSoilChart"
 
 export default function Dashboard() {
   const { producers } = useProducerContext()
@@ -15,6 +17,8 @@ export default function Dashboard() {
     , 0)
   , [producers])
 
+  const addresses = useMemo(() => producers.flatMap(producer => producer.addresses), [producers])
+
   return (
     <section className="mx-auto w-4/6">
       <ul className="flex flex-col items-center gap-4">
@@ -24,18 +28,10 @@ export default function Dashboard() {
         <DashItem>
           <SubChapter text={`Total de fazendas em hectares (área total): ${totalFarmHectaresQuantity}`} />
         </DashItem>
-        <DashItem>
-          <SubChapter text="Gráfico de pizza por estado:" />
-          <div className="w-[400px] h-[400px]">
-            <DashPieChart addresses={producers.flatMap(producer => producer.addresses)} />
-          </div>
-        </DashItem>
-        <DashItem>
-          <SubChapter text="Gráfico de pizza por cultura:" />
-        </DashItem>
-        <DashItem>
-          <SubChapter text="Gráfico de pizza por uso de solo (Área agricultável e vegetação):" />
-        </DashItem>
+
+        <StateChart addresses={addresses} />
+        <CropsChart addresses={addresses} />
+        <UsableSoilChart addresses={addresses} />
       </ul>
     </section>
   )
